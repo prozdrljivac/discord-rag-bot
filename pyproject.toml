@@ -1,0 +1,7 @@
+[project]
+name = "discord-rag-bot"
+version = "0.1.0"
+description = "Discord AI chatbot using Retrieval-Augmented Generation (RAG)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
