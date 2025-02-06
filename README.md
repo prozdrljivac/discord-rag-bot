@@ -2,9 +2,6 @@
 
 ## Todos
 
-- Set Up Development Environment
-  - Look more into pyptoject.toml and do initial setup
-  - Look more into ruff and do initial setup
 - Set up basic Discord Bot
 - Learn About RAG
 - Set Up a Vector Database
