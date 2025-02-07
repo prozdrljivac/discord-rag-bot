@@ -2,7 +2,9 @@
 
 ## Todos
 
-- Set up basic Discord Bot
+- Research python-dotenv
+- Learn about async programming in python
+- Learn what intents are in Discord
 - Learn About RAG
 - Set Up a Vector Database
 - Specialize the Bot in a Specific Domain
