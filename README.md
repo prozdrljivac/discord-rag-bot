@@ -2,6 +2,7 @@
 
 ## Todos
 
+- Look into settings up tests on pyproject.toml
 - Research python-dotenv
 - Learn about async programming in python
 - Learn what intents are in Discord
