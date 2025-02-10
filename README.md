@@ -4,10 +4,9 @@
 
 - Look into settings up tests on pyproject.toml
 - Research python-dotenv
-- Learn about async programming in python
-- Learn what intents are in Discord
-- Learn About RAG
 - Set Up a Vector Database
+  - Set up an initial connection to milvusdb
+  - Create a local docker compose file
 - Specialize the Bot in a Specific Domain
 - Implement RAG Integration
 - Connect AI Model (OpenAI/Mistral) to the Bot
