@@ -5,8 +5,7 @@
 - Look into settings up tests on pyproject.toml
 - Research python-dotenv
 - Set Up a Vector Database
-  - Set up an initial connection to milvusdb
-  - Create a local docker compose file
+  - Read about building RAG using Milvus -> https://github.com/milvus-io/bootcamp/blob/master/bootcamp/tutorials/quickstart/build_RAG_with_milvus.ipynb
 - Specialize the Bot in a Specific Domain
 - Implement RAG Integration
 - Connect AI Model (OpenAI/Mistral) to the Bot

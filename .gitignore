@@ -11,3 +11,5 @@ wheels/
 
 # Misc
 .env
+*.db
+*.db.lock
