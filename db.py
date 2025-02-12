@@ -6,12 +6,17 @@ from pymilvus import MilvusClient
 
 class VectorDB(ABC):
     @abstractmethod
-    def insert_text(self: Self, text: str, embedding: list[float]) -> None:
+    def insert_text(
+        self: Self,
+        text: str,
+        embedding: List[float],
+    ) -> None:
         pass
 
     @abstractmethod
     def retrieve_text(
-        self: Self, query_embedding: list[float]
+        self: Self,
+        query_embedding: List[float],
     ) -> Optional[List[Tuple[str, float]]]:
         pass
 
@@ -30,15 +35,31 @@ class MilvusDB(VectorDB):
             text_field="text",
         )
 
+    def insert_text(self: Self, text: str, embedding: List[float]) -> None:
+        """Insert a text-embedding pair into the database."""
+        self.client.insert(
+            self.collection_name,
+            [
+                {
+                    "text": text,
+                    "embedding": embedding,
+                },
+            ],
+        )
+        self.client.flush([self.collection_name])
+
     def retrieve_text(
-        self: Self, query_embedding: list[float]
+        self: Self, query_embedding: List[float]
     ) -> Optional[List[Tuple[str, float]]]:
         """Retrieve the most relevant text for a given embedding."""
+
+        self.client.load_collection(self.collection_name)
+
         search_res = self.client.search(
             collection_name=self.collection_name,
             data=[query_embedding],
             limit=1,
             output_fields=["text"],
         )
-        result = search_res[0]
-        return result if len(result) > 0 else None
+
+        return search_res[0] if search_res else None
