@@ -1,19 +1,23 @@
-from abc import ABC
-from typing import Self
+from abc import ABC, abstractmethod
+from typing import List, Optional, Self, Tuple
 
 from pymilvus import MilvusClient
 
 
 class VectorDB(ABC):
+    @abstractmethod
     def insert_text(self: Self, text: str, embedding: list[float]) -> None:
-        raise NotImplementedError
+        pass
 
-    def retrieve_text(self: Self, query_embedding: list[float]) -> None:
-        raise NotImplementedError
+    @abstractmethod
+    def retrieve_text(
+        self: Self, query_embedding: list[float]
+    ) -> Optional[List[Tuple[str, float]]]:
+        pass
 
 
 class MilvusDB(VectorDB):
-    def __init__(self, db_path: str):
+    def __init__(self: Self, db_path: str):
         self.client = MilvusClient(db_path)
         self.collection_name = "knowledge_base"
 
@@ -26,6 +30,15 @@ class MilvusDB(VectorDB):
             text_field="text",
         )
 
-    def retrieve_text(self, query_embedding: list[float]) -> None:
+    def retrieve_text(
+        self: Self, query_embedding: list[float]
+    ) -> Optional[List[Tuple[str, float]]]:
         """Retrieve the most relevant text for a given embedding."""
-        return None
+        search_res = self.client.search(
+            collection_name=self.collection_name,
+            data=[query_embedding],
+            limit=1,
+            output_fields=["text"],
+        )
+        result = search_res[0]
+        return result if len(result) > 0 else None
