@@ -10,6 +10,7 @@ dependencies = [
     "pydantic>=2.10.6",
     "pymilvus>=2.5.4",
     "python-dotenv>=1.0.1",
+    "redis>=5.2.1",
 ]
 
 [dependency-groups]
