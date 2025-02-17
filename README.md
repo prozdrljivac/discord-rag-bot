@@ -2,9 +2,10 @@
 
 ## Todos
 
-- Look into settings up tests on pyproject.toml
-- Research python-dotenv
-- Add memory so bot remembers prevous conversations in the session
+- Structured output using Pydantic
+- Make Milvus & Redis queries non-blocking (async).
+- Add type hints, design patterns, tests, refactoring
+- Finish Documentation
 
 ## Description
 
