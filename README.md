@@ -4,11 +4,7 @@
 
 - Look into settings up tests on pyproject.toml
 - Research python-dotenv
-- Set Up a Vector Database
-  - Read about building RAG using Milvus -> https://github.com/milvus-io/bootcamp/blob/master/bootcamp/tutorials/quickstart/build_RAG_with_milvus.ipynb
-  - Test writing of embedding to the MilvusDB
-- Connect AI Model (OpenAI/Mistral) to the Bot
-- Specialize the Bot in a Specific Domain
+- Add memory so bot remembers prevous conversations in the session
 
 ## Description
 

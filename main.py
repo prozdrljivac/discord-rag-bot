@@ -1,6 +1,7 @@
 import os
 
 import discord
+import openai
 from dotenv import load_dotenv
 
 from db import MilvusDB
@@ -15,6 +16,28 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 vector_db = MilvusDB(DB_PATH)  # Initialize DB
+
+
+def generate_response(question: str, retrieved_text: str) -> str:
+    """
+    Use GPT to generate a more natural response based on retrieved knowledge.
+    """
+
+    prompt = f"""
+    You are an anime expert. A user asked: "{question}"
+    Here is a fact related to their question: "{retrieved_text}"
+    Formulate a clear and informative response using this information.
+    """
+
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are an anime chatbot."},
+            {"role": "user", "content": prompt},
+        ],
+    )
+
+    return response.choices[0].message.content
 
 
 @client.event
@@ -36,7 +59,8 @@ async def on_message(message):
         await message.channel.send("I don't know that yet!")
         return
 
-    await message.channel.send(f"Here's what I found: {retrieved_text}")
+    ai_response = generate_response(query_text, retrieved_text)
+    await message.channel.send(ai_response)
 
 
 client.run(TOKEN)
