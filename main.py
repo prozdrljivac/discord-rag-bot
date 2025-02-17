@@ -34,6 +34,7 @@ async def on_message(message):
 
     if not retrieved_text:
         await message.channel.send("I don't know that yet!")
+        return
 
     await message.channel.send(f"Here's what I found: {retrieved_text}")
 

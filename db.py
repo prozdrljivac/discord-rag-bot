@@ -17,7 +17,7 @@ class VectorDB(ABC):
     def retrieve_text(
         self: Self,
         query_embedding: List[float],
-    ) -> Optional[List[Tuple[str, float]]]:
+    ) -> Optional[str]:
         pass
 
 
@@ -28,29 +28,28 @@ class MilvusDB(VectorDB):
 
         self.client.create_collection(
             self.collection_name,
-            dimension=1536,  # OpenAI's `text-embedding-ada-002` has 1536 dimensions
+            dimension=1536,
             auto_id=True,
             primary_field="id",
-            vector_field="embedding",
+            vector_field="vector",
             text_field="text",
         )
 
     def insert_text(self: Self, text: str, embedding: List[float]) -> None:
         """Insert a text-embedding pair into the database."""
-        self.client.insert(
-            self.collection_name,
-            [
-                {
-                    "text": text,
-                    "embedding": embedding,
-                },
-            ],
-        )
-        self.client.flush([self.collection_name])
 
+        self.client.load_collection(self.collection_name)
+
+        self.client.insert(
+            self.collection_name, [{"text": text, "vector": embedding}]
+        )
+
+        print(f"✅ Inserted: {text}")
+
+    # NOTE Do a better job on what this function should do
     def retrieve_text(
         self: Self, query_embedding: List[float]
-    ) -> Optional[List[Tuple[str, float]]]:
+    ) -> Optional[str]:
         """Retrieve the most relevant text for a given embedding."""
 
         self.client.load_collection(self.collection_name)
@@ -62,4 +61,7 @@ class MilvusDB(VectorDB):
             output_fields=["text"],
         )
 
-        return search_res[0] if search_res else None
+        if not search_res or len(search_res[0]) == 0:
+            return None
+
+        return search_res[0][0]["entity"]["text"]
